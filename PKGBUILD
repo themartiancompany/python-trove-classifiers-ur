@@ -13,7 +13,7 @@ pkgrel=1
 pkgdesc="Canonical source for classifiers on PyPI (pypi.org)"
 _http="https://github.com"
 _ns="pypa"
-url="${http}/${_ns}/${_pkg}"
+url="${_http}/${_ns}/${_pkg}"
 license=(
   'Apache'
 )
