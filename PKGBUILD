@@ -1,31 +1,68 @@
+# SPDX-License-Identifier: AGPL-3.0
+#
+# Maintainer: Truocolo <truocolo@aol.com>
+# Maintainer: Pellegrino Prevete (tallero) <pellegrinoprevete@gmail.com>
 # Maintainer: Felix Yan <felixonmars@archlinux.org>
 
-pkgname=python-trove-classifiers
+_py="python"
+_pkg=trove-classifiers
+pkgname="${_py}-${_pkg}"
 pkgver=2024.1.8
 _commit=e5c379567a6a5d67c5a2505d6429faca5b69fc45
 pkgrel=1
 pkgdesc="Canonical source for classifiers on PyPI (pypi.org)"
-url="https://github.com/pypa/trove-classifiers"
-license=('Apache')
-arch=('any')
-depends=('python')
-makedepends=('git' 'python-calver' 'python-setuptools')
-checkdepends=('python-pytest')
-source=("git+https://github.com/pypa/trove-classifiers.git#commit=$_commit")
-sha512sums=('SKIP')
+_http="https://github.com"
+_ns="pypa"
+url="${http}/${_ns}/${_pkg}"
+license=(
+  'Apache'
+)
+arch=(
+  'any'
+)
+depends=(
+  "${_py}"
+)
+makedepends=(
+  'git'
+  "${_py}-calver"
+  "${_py}-setuptools"
+)
+checkdepends=(
+  "${_py}-pytest"
+)
+source=(
+  "git+${url}.git#commit=${_commit}"
+)
+sha512sums=(
+  'SKIP'
+)
 
 build() {
-  cd trove-classifiers
-  python setup.py build
+  cd \
+    "${_pkg}"
+  "${_py}" \
+    setup.py \
+    build
 }
 
 check() {
-  cd trove-classifiers
+  cd \
+    "${_pkg}"
   pytest
-  PYTHONPATH="$PWD"/build/lib python -m tests.lib
+  PYTHONPATH="$PWD"/build/lib \
+  "${_py}" \
+    -m \
+      tests.lib
 }
 
 package() {
-  cd trove-classifiers
-  python setup.py install --root="$pkgdir" --optimize=1
+  cd \
+    "${_pkg}"
+  "${_py}" \
+    setup.py \
+      install \
+      --root="${pkgdir}" \
+      --optimize=1
 }
+
