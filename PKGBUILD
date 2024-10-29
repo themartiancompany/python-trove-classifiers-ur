@@ -5,6 +5,15 @@
 # Maintainer: Felix Yan <felixonmars@archlinux.org>
 
 _py="python"
+_pyver="$( \
+  "${_py}" \
+    -V | \
+    awk \
+      '{print $2}')"
+_pymajver="${_pyver%.*}"
+_pyminver="${_pymajver#*.}"
+_pynextver="${_pymajver%.*}.$(( \
+  ${_pyminver} + 1))"
 _pkg=trove-classifiers
 pkgname="${_py}-${_pkg}"
 pkgver=2024.1.8
@@ -21,7 +30,8 @@ arch=(
   'any'
 )
 depends=(
-  "${_py}"
+  "${_py}>=${_pymajver}"
+  "${_py}<${_pynextver}"
 )
 makedepends=(
   'git'
